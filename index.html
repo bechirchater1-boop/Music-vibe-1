@@ -1,1 +1,93 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUSIC VIBE</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090811;color:white;font-family:Arial,sans-serif;padding-bottom:120px}
+header{padding:25px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:bold;color:#a855f7}
+.logo span{color:white}
+.hero{padding:65px 7%;background:linear-gradient(120deg,#24103f,#100d20,#090811)}
+.hero h1{font-size:clamp(35px,7vw,65px);margin-bottom:15px}
+.hero h1 span{color:#b45cff}
+.hero p{color:#c9bdd8;font-size:17px}
+.search{margin:25px 7%;width:86%;padding:16px;border-radius:12px;border:1px solid #49335d;background:#171322;color:white;font-size:16px}
+h2{margin:25px 7% 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:18px;margin:0 7%}
+.card{background:#171322;padding:12px;border-radius:15px;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-5px);background:#292039}
+.cover{height:145px;border-radius:10px;display:grid;place-items:center;font-size:55px;background:linear-gradient(135deg,#7925b9,#21113c)}
+.card h3{font-size:15px;margin-top:12px}
+.card p{font-size:12px;color:#aaa;margin-top:6px}
+button{background:#a855f7;color:white;border:0;padding:12px 20px;border-radius:25px;cursor:pointer}
+.player{position:fixed;bottom:0;left:0;width:100%;background:#1a1424;border-top:1px solid #50316a;padding:15px 7%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.player small{color:#aaa}
+.player button{font-size:19px;padding:10px 16px}
+audio{display:none}
+@media(max-width:500px){.player{padding:12px}.cover{height:115px}.hero{padding:45px 7%}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">MUSIC <span>VIBE.</span></div>
+<button onclick="document.querySelector('#music').scrollIntoView()">Explore</button>
+</header>
+
+<section class="hero">
+<h1>Feel the <span>Music.</span><br>Live the Vibe.</h1>
+<p>Discover your sound. Enjoy every moment.</p>
+</section>
+
+<input class="search" id="search" placeholder="🔎 Search songs or artists..." oninput="filterSongs()">
+
+<h2 id="music">Trending Music</h2>
+<div class="grid" id="songs">
+<div class="card" onclick="playSong(0)"><div class="cover">🎧</div><h3>Dreams</h3><p>Music Vibe</p></div>
+<div class="card" onclick="playSong(1)"><div class="cover">🌙</div><h3>Night Drive</h3><p>Music Vibe</p></div>
+<div class="card" onclick="playSong(2)"><div class="cover">💜</div><h3>Feel Alive</h3><p>Music Vibe</p></div>
+<div class="card" onclick="playSong(3)"><div class="cover">🔥</div><h3>Energy</h3><p>Music Vibe</p></div>
+</div>
+
+<div class="player">
+<div><strong id="songName">Choose a song</strong><br><small id="status">Ready to play</small></div>
+<button onclick="togglePlay()" id="play">▶</button>
+</div>
+
+<audio id="audio" controls></audio>
+
+<script>
+const tracks=[
+{name:"Dreams",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+{name:"Night Drive",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"},
+{name:"Feel Alive",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"},
+{name:"Energy",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"}
+];
+const audio=document.getElementById("audio");
+let current=-1;
+function playSong(i){
+current=i;
+audio.src=tracks[i].url;
+document.getElementById("songName").textContent=tracks[i].name;
+audio.play();
+document.getElementById("play").textContent="⏸";
+document.getElementById("status").textContent="Now playing";
+}
+function togglePlay(){
+if(current===-1){playSong(0);return}
+if(audio.paused){audio.play();document.getElementById("play").textContent="⏸"}
+else{audio.pause();document.getElementById("play").textContent="▶"}
+}
+audio.onended=()=>{if(current<3)playSong(current+1)};
+function filterSongs(){
+let q=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".card").forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
+});
+}
+</script>
+</body>
+</html>
