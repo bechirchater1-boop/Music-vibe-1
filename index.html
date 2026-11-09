@@ -4,90 +4,460 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MUSIC VIBE</title>
+<meta name="theme-color" content="#090811">
+<meta name="description" content="Discover Tunisian rap, Arabic music, artists, new sounds and music guides with MUSIC VIBE.">
+
+<meta name="google-site-verification" content="8o0RAgg5fT0uXOgthV9aRfXids5gpw9qRdrUhUJOVSA" />
+
+<title>MUSIC VIBE | Discover Your Sound</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#090811;color:white;font-family:Arial,sans-serif;padding-bottom:120px}
-header{padding:25px 7%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:27px;font-weight:bold;color:#a855f7}
-.logo span{color:white}
-.hero{padding:65px 7%;background:linear-gradient(120deg,#24103f,#100d20,#090811)}
-.hero h1{font-size:clamp(35px,7vw,65px);margin-bottom:15px}
-.hero h1 span{color:#b45cff}
-.hero p{color:#c9bdd8;font-size:17px}
-.search{margin:25px 7%;width:86%;padding:16px;border-radius:12px;border:1px solid #49335d;background:#171322;color:white;font-size:16px}
-h2{margin:25px 7% 20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:18px;margin:0 7%}
-.card{background:#171322;padding:12px;border-radius:15px;cursor:pointer;transition:.2s}
-.card:hover{transform:translateY(-5px);background:#292039}
-.cover{height:145px;border-radius:10px;display:grid;place-items:center;font-size:55px;background:linear-gradient(135deg,#7925b9,#21113c)}
-.card h3{font-size:15px;margin-top:12px}
-.card p{font-size:12px;color:#aaa;margin-top:6px}
-button{background:#a855f7;color:white;border:0;padding:12px 20px;border-radius:25px;cursor:pointer}
-.player{position:fixed;bottom:0;left:0;width:100%;background:#1a1424;border-top:1px solid #50316a;padding:15px 7%;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.player small{color:#aaa}
-.player button{font-size:19px;padding:10px 16px}
-audio{display:none}
-@media(max-width:500px){.player{padding:12px}.cover{height:115px}.hero{padding:45px 7%}}
+html{scroll-behavior:smooth}
+body{
+ background:#090811;color:#fff;
+ font-family:Arial,sans-serif;
+ line-height:1.6;padding-bottom:35px
+}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+:root{--purple:#a855f7;--pink:#ec4899;--muted:#aaa}
+.container{width:min(1150px,92%);margin:auto}
+header{
+ position:sticky;top:0;z-index:20;
+ background:rgba(9,8,17,.94);
+ backdrop-filter:blur(14px);
+ border-bottom:1px solid #272034
+}
+nav{
+ display:flex;align-items:center;justify-content:space-between;
+ min-height:75px;gap:15px
+}
+.logo{font-size:24px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--purple)}
+.navlinks{display:flex;gap:20px;flex-wrap:wrap}
+.navlinks a{font-size:13px;color:#ccc}
+.navlinks a:hover{color:#c084fc}
+.hero{
+ padding:85px 15px 65px;text-align:center;
+ background:radial-gradient(ellipse at top,#35104f 0%,#171024 38%,#090811 75%)
+}
+.tag{
+ display:inline-block;border:1px solid #7040a0;
+ color:#d8b4fe;border-radius:30px;
+ padding:7px 15px;font-size:12px;margin-bottom:20px
+}
+.hero h1{font-size:clamp(38px,7vw,75px);line-height:1.1}
+.hero h1 span{
+ background:linear-gradient(90deg,#c084fc,#ec4899);
+ -webkit-background-clip:text;color:transparent
+}
+.hero p{color:#c4bdcf;max-width:600px;margin:20px auto}
+.btn{
+ display:inline-block;border:0;border-radius:10px;
+ padding:12px 20px;font-weight:bold;
+ background:linear-gradient(90deg,#9333ea,#db2777);
+ color:white
+}
+.btn:hover{opacity:.85;transform:translateY(-2px)}
+section{padding:55px 0}
+.section-title{text-align:center;margin-bottom:28px}
+.section-title h2{font-size:30px}
+.section-title p{color:var(--muted);font-size:14px}
+.searchbar{
+ display:flex;gap:10px;max-width:650px;margin:25px auto;
+ flex-wrap:wrap
+}
+.searchbar input{
+ flex:1;min-width:200px;padding:14px;
+ border-radius:10px;border:1px solid #342744;
+ background:#15111f;color:white;outline:none
+}
+.searchbar input:focus{border-color:var(--purple)}
+.filters{
+ display:flex;justify-content:center;gap:9px;
+ flex-wrap:wrap;margin:20px 0 30px
+}
+.filter{
+ background:#171321;border:1px solid #342744;
+ color:#ccc;padding:8px 15px;border-radius:30px
+}
+.filter.active,.filter:hover{
+ background:#7132a9;border-color:#a855f7;color:white
+}
+.grid{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:17px
+}
+.card{
+ background:linear-gradient(145deg,#1c1728,#100e18);
+ border:1px solid #30243e;border-radius:16px;
+ padding:20px;transition:.25s;min-width:0
+}
+.card:hover{transform:translateY(-5px);border-color:#9b50ce}
+.artist-icon{
+ height:110px;border-radius:12px;margin-bottom:15px;
+ display:flex;align-items:center;justify-content:center;
+ font-size:37px;font-weight:900;
+ background:linear-gradient(135deg,#37164f,#8a2c86,#24143b)
+}
+.artist-icon.alt{background:linear-gradient(135deg,#171d40,#6740a4,#21112f)}
+.artist-icon.third{background:linear-gradient(135deg,#531c3a,#a04469,#201027)}
+.card h3{font-size:18px;margin-bottom:5px}
+.card p{color:#aaa;font-size:13px;margin-bottom:13px}
+.card-actions{display:flex;align-items:center;gap:8px}
+.listen{
+ flex:1;text-align:center;padding:9px 10px;
+ background:#7226a9;border-radius:8px;font-size:12px;
+ font-weight:bold
+}
+.favorite{
+ background:#292033;color:white;border:1px solid #493458;
+ border-radius:8px;padding:8px 11px
+}
+.favorite.saved{color:#f472b6}
+.empty{text-align:center;color:#aaa;padding:30px;grid-column:1/-1}
+.music-card{
+ display:flex;align-items:center;gap:15px;
+ margin-bottom:12px;padding:15px;
+ background:#171321;border:1px solid #30243e;border-radius:12px
+}
+.music-art{
+ width:55px;height:55px;flex-shrink:0;border-radius:10px;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(135deg,#a855f7,#db2777);font-size:23px
+}
+.music-info{flex:1;min-width:0}
+.music-info h3{font-size:15px}
+.music-info p{font-size:12px;color:#aaa}
+.music-card .listen{flex:0 0 auto}
+.feature-grid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:18px
+}
+.feature{
+ background:#171321;border:1px solid #30243e;
+ padding:25px;border-radius:15px
+}
+.feature .emoji{font-size:30px}
+.feature h3{margin:12px 0 5px}
+.feature p{font-size:13px;color:#aaa}
+.about{
+ max-width:780px;margin:auto;text-align:center;
+ background:linear-gradient(135deg,#21142f,#11101a);
+ border:1px solid #392747;border-radius:18px;padding:35px
+}
+.about p{color:#bbb;margin:12px 0}
+footer{
+ border-top:1px solid #30243e;
+ padding:30px 0;text-align:center;color:#999;font-size:13px
+}
+footer a{color:#c084fc}
+.footer-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:15px}
+#toast{
+ position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#7e22ce;padding:11px 20px;border-radius:10px;
+ display:none;z-index:50;font-size:13px
+}
+@media(max-width:850px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .feature-grid{grid-template-columns:1fr}
+}
+@media(max-width:550px){
+ nav{padding:13px 0;align-items:flex-start;flex-direction:column}
+ .navlinks{gap:12px}
+ .navlinks a{font-size:12px}
+ .hero{padding:65px 10px}
+ .grid{gap:10px}
+ .card{padding:12px}
+ .artist-icon{height:85px}
+ .card h3{font-size:15px}
+ .listen{font-size:11px}
+ .music-card{gap:9px;padding:10px}
+ .music-info h3{font-size:13px}
+ .music-card .listen{padding:8px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<div class="logo">MUSIC <span>VIBE.</span></div>
-<button onclick="document.querySelector('#music').scrollIntoView()">Explore</button>
+ <div class="container">
+  <nav>
+   <a class="logo" href="#">MUSIC <span>VIBE.</span></a>
+   <div class="navlinks">
+    <a href="#artists">Artists</a>
+    <a href="#music">Music</a>
+    <a href="#guides">Guides</a>
+    <a href="#creators">Creators</a>
+    <a href="#about">About</a>
+   </div>
+  </nav>
+ </div>
 </header>
 
-<section class="hero">
-<h1>Feel the <span>Music.</span><br>Live the Vibe.</h1>
-<p>Discover your sound. Enjoy every moment.</p>
+<main>
+
+<div class="hero">
+ <div class="tag">YOUR MUSIC. YOUR VIBE.</div>
+ <h1>Feel the Music.<br><span>Live the Vibe.</span></h1>
+ <p>Discover Tunisian rap, Arabic music, your favorite artists and new sounds. Your music journey starts here.</p>
+ <a class="btn" href="#artists">Explore Artists →</a>
+</div>
+
+<section id="artists">
+ <div class="container">
+  <div class="section-title">
+   <h2>Discover Artists</h2>
+   <p>Explore your favorite Tunisian and Arabic artists.</p>
+  </div>
+
+  <div class="searchbar">
+   <input id="search" type="search" placeholder="Search artists or music...">
+  </div>
+
+  <div class="filters">
+   <button class="filter active" data-filter="all">All</button>
+   <button class="filter" data-filter="tunisian">Tunisian Rap</button>
+   <button class="filter" data-filter="arabic">Arabic Music</button>
+   <button class="filter" data-filter="favorites">Favorites ♥</button>
+  </div>
+
+  <div class="grid" id="artistGrid"></div>
+ </div>
 </section>
 
-<input class="search" id="search" placeholder="🔎 Search songs or artists..." oninput="filterSongs()">
+<section id="music">
+ <div class="container">
+  <div class="section-title">
+   <h2>Explore Music</h2>
+   <p>Find music and listen on Spotify.</p>
+  </div>
+  <div id="musicList"></div>
+  <div style="text-align:center;margin-top:20px">
+   <a class="btn" target="_blank" rel="noopener"
+    href="https://open.spotify.com/search/Tunisian%20Rap">
+    Explore on Spotify →
+   </a>
+  </div>
+ </div>
+</section>
 
-<h2 id="music">Trending Music</h2>
-<div class="grid" id="songs">
-<div class="card" onclick="playSong(0)"><div class="cover">🎧</div><h3>Dreams</h3><p>Music Vibe</p></div>
-<div class="card" onclick="playSong(1)"><div class="cover">🌙</div><h3>Night Drive</h3><p>Music Vibe</p></div>
-<div class="card" onclick="playSong(2)"><div class="cover">💜</div><h3>Feel Alive</h3><p>Music Vibe</p></div>
-<div class="card" onclick="playSong(3)"><div class="cover">🔥</div><h3>Energy</h3><p>Music Vibe</p></div>
-</div>
+<section id="guides">
+ <div class="container">
+  <div class="section-title">
+   <h2>Music Guides</h2>
+   <p>Discover new sounds and explore different vibes.</p>
+  </div>
+  <div class="feature-grid">
+   <div class="feature">
+    <div class="emoji">🎤</div>
+    <h3>Tunisian Rap</h3>
+    <p>Discover Tunisian rap artists and explore the local hip-hop scene.</p>
+    <a class="listen" style="display:inline-block;margin-top:15px"
+     href="https://open.spotify.com/search/Tunisian%20Rap" target="_blank" rel="noopener">Explore →</a>
+   </div>
+   <div class="feature">
+    <div class="emoji">🌍</div>
+    <h3>Arabic Music</h3>
+    <p>Explore Arabic music, different artists and new releases.</p>
+    <a class="listen" style="display:inline-block;margin-top:15px"
+     href="https://open.spotify.com/search/Arabic%20Music" target="_blank" rel="noopener">Explore →</a>
+   </div>
+   <div class="feature">
+    <div class="emoji">🌙</div>
+    <h3>Chill Vibes</h3>
+    <p>Find relaxing music and discover your next favorite sound.</p>
+    <a class="listen" style="display:inline-block;margin-top:15px"
+     href="https://open.spotify.com/search/Chill%20Music" target="_blank" rel="noopener">Explore →</a>
+   </div>
+  </div>
+ </div>
+</section>
 
-<div class="player">
-<div><strong id="songName">Choose a song</strong><br><small id="status">Ready to play</small></div>
-<button onclick="togglePlay()" id="play">▶</button>
-</div>
+<section id="creators">
+ <div class="container">
+  <div class="section-title">
+   <h2>For Creators</h2>
+   <p>A space for music lovers and emerging artists.</p>
+  </div>
+  <div class="about">
+   <div style="font-size:35px">🎧</div>
+   <h2>Have a Sound to Share?</h2>
+   <p>Are you an artist, creator or music enthusiast? Contact MUSIC VIBE and tell us about your music.</p>
+   <a class="btn" href="mailto:bechirchater1@gmail.com?subject=MUSIC%20VIBE%20-%20Artist%20Submission">Contact Us</a>
+  </div>
+ </div>
+</section>
 
-<audio id="audio" controls></audio>
+<section id="more">
+ <div class="container">
+  <div class="section-title">
+   <h2>More Music</h2>
+   <p>Choose your mood and discover something new.</p>
+  </div>
+  <div class="feature-grid">
+   <div class="feature"><div class="emoji">🔥</div><h3>Rap & Hip-Hop</h3><a class="listen" style="display:inline-block;margin-top:12px" target="_blank" rel="noopener" href="https://open.spotify.com/search/Rap%20Hip%20Hop">Listen on Spotify →</a></div>
+   <div class="feature"><div class="emoji">💜</div><h3>R&B</h3><a class="listen" style="display:inline-block;margin-top:12px" target="_blank" rel="noopener" href="https://open.spotify.com/search/R%26B">Listen on Spotify →</a></div>
+   <div class="feature"><div class="emoji">🎶</div><h3>New Sounds</h3><a class="listen" style="display:inline-block;margin-top:12px" target="_blank" rel="noopener" href="https://open.spotify.com/search/New%20Music">Listen on Spotify →</a></div>
+  </div>
+ </div>
+</section>
+
+<section id="about">
+ <div class="container">
+  <div class="about">
+   <div class="tag">ABOUT MUSIC VIBE</div>
+   <h2>Discover Your Sound.</h2>
+   <p>MUSIC VIBE is a music discovery platform dedicated to Tunisian rap, Arabic music and the sounds that bring people together.</p>
+   <p>Discover artists, explore music and continue listening on Spotify.</p>
+   <p>Have a suggestion? <a href="mailto:bechirchater1@gmail.com" style="color:#c084fc">Contact us</a>.</p>
+  </div>
+ </div>
+</section>
+
+<section id="privacy">
+ <div class="container">
+  <div class="about">
+   <h2>Privacy Policy</h2>
+   <p>MUSIC VIBE uses your browser's local storage to remember your favorite artists. Favorites stay on your device.</p>
+   <p>When you click a Spotify link, you leave MUSIC VIBE and open Spotify. Spotify's own privacy policy applies to its services.</p>
+   <p>Contact: bechirchater1@gmail.com</p>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ <div class="container">
+  <a class="logo" href="#">MUSIC <span>VIBE.</span></a>
+  <div class="footer-links">
+   <a href="#artists">Artists</a>
+   <a href="#music">Music</a>
+   <a href="#about">About</a>
+   <a href="#privacy">Privacy</a>
+   <a href="mailto:bechirchater1@gmail.com">Contact</a>
+  </div>
+  <p>© <span id="year"></span> MUSIC VIBE. All rights reserved.</p>
+  <p style="margin-top:7px">Music discovery. Your vibe. Your sound.</p>
+ </div>
+</footer>
+
+<div id="toast"></div>
 
 <script>
-const tracks=[
-{name:"Dreams",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-{name:"Night Drive",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"},
-{name:"Feel Alive",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"},
-{name:"Energy",url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"}
+const artists = [
+ {name:"Samara",genre:"Tunisian Rap",type:"tunisian",symbol:"S",style:""},
+ {name:"Balti",genre:"Tunisian Rap",type:"tunisian",symbol:"B",style:"alt"},
+ {name:"Klay BBJ",genre:"Tunisian Rap",type:"tunisian",symbol:"K",style:"third"},
+ {name:"Nordo",genre:"Tunisian Rap",type:"tunisian",symbol:"N",style:"alt"},
+ {name:"Kaso",genre:"Tunisian Rap",type:"tunisian",symbol:"K",style:""},
+ {name:"A.L.A",genre:"Tunisian Rap",type:"tunisian",symbol:"A",style:"third"},
+ {name:"Blingos",genre:"Tunisian Rap",type:"tunisian",symbol:"B",style:"alt"},
+ {name:"Sanfara",genre:"Tunisian Rap",type:"tunisian",symbol:"S",style:""}
 ];
-const audio=document.getElementById("audio");
-let current=-1;
-function playSong(i){
-current=i;
-audio.src=tracks[i].url;
-document.getElementById("songName").textContent=tracks[i].name;
-audio.play();
-document.getElementById("play").textContent="⏸";
-document.getElementById("status").textContent="Now playing";
+
+const tracks = [
+ {title:"Tunisian Rap",artist:"Discover Tunisian Artists",query:"Tunisian Rap"},
+ {title:"Samara",artist:"Explore music by Samara",query:"Samara"},
+ {title:"Balti",artist:"Explore music by Balti",query:"Balti"},
+ {title:"Klay BBJ",artist:"Explore music by Klay BBJ",query:"Klay BBJ"},
+ {title:"Nordo",artist:"Explore music by Nordo",query:"Nordo"},
+ {title:"Kaso",artist:"Explore music by Kaso",query:"Kaso"},
+ {title:"A.L.A",artist:"Explore music by A.L.A",query:"A.L.A Tunisian"},
+ {title:"Blingos",artist:"Explore music by Blingos",query:"Blingos"},
+ {title:"Sanfara",artist:"Explore music by Sanfara",query:"Sanfara"}
+];
+
+let currentFilter="all";
+let favorites=JSON.parse(localStorage.getItem("mv_favorites")||"[]");
+
+function spotifySearch(query){
+ return "https://open.spotify.com/search/"+encodeURIComponent(query);
 }
-function togglePlay(){
-if(current===-1){playSong(0);return}
-if(audio.paused){audio.play();document.getElementById("play").textContent="⏸"}
-else{audio.pause();document.getElementById("play").textContent="▶"}
+
+function renderArtists(){
+ const term=document.getElementById("search").value.toLowerCase().trim();
+ const grid=document.getElementById("artistGrid");
+ const filtered=artists.filter(a=>{
+  const matches=(a.name+" "+a.genre).toLowerCase().includes(term);
+  const category=currentFilter==="all"||
+   (currentFilter==="favorites"?favorites.includes(a.name):a.type===currentFilter);
+  return matches&&category;
+ });
+
+ if(!filtered.length){
+  grid.innerHTML='<div class="empty">No artists found. Try another search.</div>';
+  return;
+ }
+
+ grid.innerHTML=filtered.map(a=>`
+  <article class="card">
+   <div class="artist-icon ${a.style}">${a.symbol}</div>
+   <h3>${a.name}</h3>
+   <p>${a.genre}</p>
+   <div class="card-actions">
+    <a class="listen" target="_blank" rel="noopener"
+     href="${spotifySearch(a.name)}">Spotify ↗</a>
+    <button class="favorite ${favorites.includes(a.name)?"saved":""}"
+     data-fav="${a.name}" aria-label="Toggle favorite">
+     ${favorites.includes(a.name)?"♥":"♡"}
+    </button>
+   </div>
+  </article>
+ `).join("");
 }
-audio.onended=()=>{if(current<3)playSong(current+1)};
-function filterSongs(){
-let q=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll(".card").forEach(c=>{
-c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
+
+function renderMusic(){
+ document.getElementById("musicList").innerHTML=tracks.map(t=>`
+  <div class="music-card">
+   <div class="music-art">♫</div>
+   <div class="music-info">
+    <h3>${t.title}</h3>
+    <p>${t.artist}</p>
+   </div>
+   <a class="listen" target="_blank" rel="noopener"
+    href="${spotifySearch(t.query)}">Listen ↗</a>
+  </div>
+ `).join("");
+}
+
+document.getElementById("artistGrid").addEventListener("click",e=>{
+ const button=e.target.closest("[data-fav]");
+ if(!button)return;
+ const name=button.dataset.fav;
+ favorites=favorites.includes(name)
+  ?favorites.filter(x=>x!==name)
+  :[...favorites,name];
+ localStorage.setItem("mv_favorites",JSON.stringify(favorites));
+ renderArtists();
+ showToast(favorites.includes(name)?"Added to favorites":"Removed from favorites");
 });
+
+document.getElementById("search").addEventListener("input",renderArtists);
+
+document.querySelectorAll(".filter").forEach(button=>{
+ button.addEventListener("click",()=>{
+  currentFilter=button.dataset.filter;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderArtists();
+ });
+});
+
+function showToast(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;
+ toast.style.display="block";
+ setTimeout(()=>toast.style.display="none",1800);
 }
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+renderArtists();
+renderMusic();
 </script>
+
 </body>
 </html>
